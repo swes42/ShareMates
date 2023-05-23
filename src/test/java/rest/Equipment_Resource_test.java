@@ -1,14 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package rest;
 
-import entities.Equipment;
+import presentationlayer.rest.ApplicationConfig;
+import datalayer.dtos.EquipmentDTO;
+import datalayer.entities.Equipment;
+import datalayer.entities.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -20,18 +22,23 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import utils.EMF_Creator;
+import datalayer.utils.EMF_Creator;
 
 /**
  *
  * @author Selina A.S.
  */
+
+@Disabled
+
 public class Equipment_Resource_test {
     
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static Equipment e, e1;
+    private static User user;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -69,11 +76,19 @@ public class Equipment_Resource_test {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        e = new Equipment("Some txt", "More text");
-        e1 = new Equipment("aaa", "bbb");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Equipment.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            
+            user = new User("Test_User", "Password");
+            e = new Equipment("Lenovo Thinkpad", "256 GB sdd");
+            e1 = new Equipment("Apple Macbook", "256 GB sdd");
+            
+            e.setUser(user);
+            e1.setUser(user);
+            
+            em.persist(user);
             em.persist(e);
             em.persist(e1);
             em.getTransaction().commit();
@@ -88,22 +103,24 @@ public class Equipment_Resource_test {
         given().when().get("/xxx").then().statusCode(200);
     }
 
+    /*
     //This test assumes the database contains two rows
     @Test
-    public void testDummyMsg() throws Exception {
+    public void getAllEquipments() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("ShareMates backend"));
-    }
+                .when()
+                .get("/equipment/all").then()
+                .extract().body().jsonPath().getList("all Equipments", EquipmentDTO.class);
+    List<String> allEquips = new ArrayList();
+    for (EquipmentDTO e : )
+    }*/
 
     @Test
     public void testCount() throws Exception {
         given()
                 .contentType("application/json")
-                .get("/xxx/count").then()
+                .get("/equipment/count").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(2));

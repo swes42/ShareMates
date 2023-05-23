@@ -1,4 +1,4 @@
-package errorhandling;
+package presentationlayer.errorhandling;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,5 +47,18 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable>  {
         return Response.Status.INTERNAL_SERVER_ERROR;
 
     }
+    
+    public static Response makeErrRes(String msg, int status) {
+        ExceptionDTO error = new ExceptionDTO(status, msg);
+        String errJson = gson.toJson(error);
+        return Response.status(error.getCode())
+                .entity(errJson)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+    }
+    
+    
+    
+    
         
 }

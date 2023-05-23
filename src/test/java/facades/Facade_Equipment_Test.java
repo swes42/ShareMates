@@ -1,24 +1,22 @@
 package facades;
 
-import utils.EMF_Creator;
-import entities.Equipment;
+import businesslayer.facades.EquipmentFacade;
+import datalayer.utils.EMF_Creator;
+import datalayer.entities.Equipment;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+
 
 public class Facade_Equipment_Test {
 
     private static EntityManagerFactory emf;
-    private static Facade_Equipment facade;
+    private static EquipmentFacade facade;
 
     public Facade_Equipment_Test() {
     }
@@ -26,7 +24,7 @@ public class Facade_Equipment_Test {
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = Facade_Equipment.getFacade_Equipment(emf);
+       facade = EquipmentFacade.getEquipmentFacade(emf);
     }
 
     @AfterAll
@@ -56,9 +54,5 @@ public class Facade_Equipment_Test {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
-    @Test
-    public void testAFacadeMethod() throws Exception {
-        assertEquals(2, facade.getEquipmentCount(), "Expects two rows in the database");
-    }
+   
 }
