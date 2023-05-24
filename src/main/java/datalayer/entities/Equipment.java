@@ -35,11 +35,11 @@ public class Equipment implements Serializable {
     
     @NotNull
     @Column(name = "name", length = 300)
-    private String e_name;
+    private String name;
     
     @NotNull
     @Column (name = "description", length = 250)
-    private String e_desc;
+    private String description;
     
     @JoinColumn(name = "username")
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -50,16 +50,11 @@ public class Equipment implements Serializable {
     }  
     
 
-    public Equipment(String e_name, String e_desc, User user) {
-        this.e_name = e_name;
-        this.e_desc = e_desc;
-        this.user = user;
+    public Equipment(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
     
-    public Equipment(String e_name, String e_desc){
-        this.e_name = e_name;
-        this.e_desc = e_desc;
-    }
 
     public int getId() {
         return id;
@@ -69,20 +64,20 @@ public class Equipment implements Serializable {
         this.id = id;
     }
 
-    public String getE_name() {
-        return e_name;
+    public String getName() {
+        return name;
     }
 
-    public void setE_name(String e_name) {
-        this.e_name = e_name;
+    public void setE_name(String name) {
+        this.name = name;
     }
 
-    public String getE_desc() {
-        return e_desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setE_desc(String e_desc) {
-        this.e_desc = e_desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser() {

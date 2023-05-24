@@ -31,7 +31,7 @@ public class Facade_Equipment_Test {
        facade = EquipmentFacade.getEquipmentFacade(emf);
     }
 
-    @AfterAll
+    /*@AfterAll
     public static void tearDownClass() {
         EntityManager em = emf.createEntityManager();
         
@@ -43,26 +43,25 @@ public class Facade_Equipment_Test {
             em.close();
         }
 
-    }
+    }*/
 
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        e = new Equipment("EquipmentFacade", "FacadeDescription");
-        
         try {
             em.getTransaction().begin();
-            em.persist(e);
+            em.createNamedQuery("Equipment.deleteAllRows").executeUpdate();
+            em.persist(new Equipment("eeee", "eeeeee text"));
+            em.persist(new Equipment("eeee", "bebeeb"));
+
             em.getTransaction().commit();
-            eDTO = new EquipmentDTO(e);
-                        
         } finally {
             em.close();
         }
     }
-
+/*
     @AfterEach
     public void tearDown() {
         EntityManager em = emf.createEntityManager();
@@ -78,5 +77,5 @@ public class Facade_Equipment_Test {
         }
     }
 
-   
+   */
 }

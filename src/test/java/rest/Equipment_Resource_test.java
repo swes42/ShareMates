@@ -28,7 +28,6 @@ import datalayer.utils.EMF_Creator;
  * @author Selina A.S.
  */
 
-@Disabled
 
 public class Equipment_Resource_test {
     

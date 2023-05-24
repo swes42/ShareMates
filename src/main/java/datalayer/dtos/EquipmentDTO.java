@@ -8,32 +8,16 @@ import datalayer.entities.Equipment;
  */
 public class EquipmentDTO {
     
-    private int id; 
     private String name;
     private String description;
     private String username; 
 
-    public EquipmentDTO(int id, String name, String description, String username) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.username = username; 
-    }
-    
     public EquipmentDTO(Equipment equipment){
     }
     
     public EquipmentDTO(String name, String description){
         this.name = name;
         this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
