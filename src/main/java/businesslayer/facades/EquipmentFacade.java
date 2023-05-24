@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.NotFoundException;
 
 /**
  *
@@ -32,25 +33,29 @@ public class EquipmentFacade {
         return emf.createEntityManager();
     }
     
-    public EquipmentDTO addEquipment(String name, String description, String username) {
+    public EquipmentDTO addEquipment(String name, String description) throws NotFoundException {
         EntityManager em = getEntityManager();
-        missingInput(name, description);
-        User user = null;
-        Equipment equipment = null;
+        Equipment equipment;
         
         try {
-            em.getTransaction().begin();
-            user = getUserFromDatabase(em, username);
-            equipment = new Equipment(name, description, user);
+            equipment = em.find(Equipment.class, name);
             
-            em.persist(equipment);
-            em.getTransaction().commit();
-            
-        } catch (UserNotFound unf){
-            Logger.getLogger(EquipmentFacade.class.getName()).log(Level.SEVERE, null, unf);
+            if (equipment == null && name.length() > 0 && description.length() > 0){
+                equipment = new Equipment(name, description);
+                
+                em.getTransaction().begin();
+                em.persist(equipment);
+                em.getTransaction().commit();
+            } else {
+                if ((name.length() == 0 || description.length() == 0)) {
+                    throw new NotFoundException("No input?");
+                }
+            }
         } finally {
             em.close();
         }
+        
+        
         return new EquipmentDTO(equipment);    
     }
 
@@ -58,16 +63,7 @@ public class EquipmentFacade {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public User getUserFromDatabase(EntityManager em, String username)throws UserNotFound {
-        User user = em.find(User.class, username);
-        if (user == null) {
-            throw new UserNotFound(String.format("User with provided username not found", username));
-        }else {
-            return user; 
-            
-        }
-    }
-
+    
     public EquipmentDTO getAllEquipments() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

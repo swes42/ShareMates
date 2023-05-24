@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import datalayer.dtos.EquipmentDTO;
 import presentationlayer.errorhandling.MissingInput;
 import businesslayer.facades.EquipmentFacade;
+import datalayer.entities.Equipment;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -17,6 +18,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import datalayer.utils.EMF_Creator;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -40,24 +44,30 @@ public class EquipmentsResource {
         return "{\"msg\":\"Equipments Resource\"}";
     }
     
-    
+    //http://localhost:8080/ShareMates/api/equipment/all
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String AllEquipments() {
-        EquipmentDTO equipments = FACADE.getAllEquipments();
-        return GSON.toJson(equipments);
+    public String allEquipments() {
+        EntityManager em = EMF.createEntityManager();
+        try {
+            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", datalayer.entities.Equipment.class);
+            List<Equipment> equipments = query.getResultList();
+            return "[" + equipments.size() + "]";
+        } finally {
+            em.close();
+        }
     }
 
     @POST
-    @RolesAllowed({"user"}) //admin senere
+    //@RolesAllowed({"user"}) //admin senere
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    
+    @Path("add")
     public String addEquipment(String equipment) throws MissingInput {
-        EquipmentDTO eDto = GSON.fromJson(equipment, EquipmentDTO.class);
-        EquipmentDTO eDtoAdded = FACADE.addEquipment(eDto.getName(), eDto.getDescription(), eDto.getUsername());
-        return GSON.toJson(eDtoAdded);
+        EquipmentDTO equipmentDTO = GSON.fromJson(equipment, EquipmentDTO.class);
+        EquipmentDTO addEquipment = FACADE.addEquipment(equipmentDTO.getName(), equipmentDTO.getDescription());
+        return GSON.toJson(addEquipment);
     } 
     
     

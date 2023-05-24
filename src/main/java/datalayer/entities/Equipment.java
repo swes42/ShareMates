@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-@Table (name = "equipment")
+@Table (name = "equipments")
 @NamedQueries ({
     @NamedQuery(name = "Equipment.deleteAllRows", query = "DELETE from Equipment"),
     @NamedQuery(name = "Equipment.getAllRows", query = "SELECT e from Equipment e")

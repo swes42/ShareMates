@@ -1,8 +1,6 @@
 package datalayer.dtos;
 
 import datalayer.entities.Equipment;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -15,7 +13,7 @@ public class EquipmentDTO {
     private String description;
     private String username; 
 
-    public EquipmentDTO(int e_id, String name, String description, String username) {
+    public EquipmentDTO(int id, String name, String description, String username) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,10 +21,6 @@ public class EquipmentDTO {
     }
     
     public EquipmentDTO(Equipment equipment){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.username = username;
     }
     
     public EquipmentDTO(String name, String description){

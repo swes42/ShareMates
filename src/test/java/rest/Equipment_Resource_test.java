@@ -2,15 +2,12 @@
 package rest;
 
 import presentationlayer.rest.ApplicationConfig;
-import datalayer.dtos.EquipmentDTO;
 import datalayer.entities.Equipment;
 import datalayer.entities.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -38,7 +35,6 @@ public class Equipment_Resource_test {
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static Equipment e, e1;
-    private static User user, user1;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -78,21 +74,14 @@ public class Equipment_Resource_test {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Equipment.deleteAllRows").executeUpdate();
-            em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            em.createQuery("delete from Equipment").executeUpdate();
             
-            user = new User("Test_User", "Password");
-            user1 = new User("Test_User1", "Password1");
+            e = new Equipment("Lenovo Thinkpad", "256 gb ssd");
+            e1 = new Equipment("MacBook", "8 RAM");
             
-            e = new Equipment("Lenovo Thinkpad", "256 GB sdd");
-            user.addEquipment(e);
-            e1 = new Equipment("Apple Macbook", "256 GB sdd");
-            user.addEquipment(e1);
-            
-            em.persist(user);
-            em.persist(user1);
             em.persist(e);
             em.persist(e1);
+            
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -101,8 +90,7 @@ public class Equipment_Resource_test {
 
     @Test
     public void testServerIsUp() {
-        System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
+        given().when().get("/equipmentserver").then().statusCode(200);
     }
 
     /*

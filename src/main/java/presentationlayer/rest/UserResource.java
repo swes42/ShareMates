@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
  * @author Selina A.S.
  */
 
-
+//http://localhost:8080/ShareMates/api/info/
 @Path("info")
 public class UserResource {
     
@@ -33,7 +33,7 @@ public class UserResource {
    
 
     
-    
+ //http://localhost:8080/ShareMates/api/info/all   
  @GET
  @Produces(MediaType.APPLICATION_JSON)
  @Path("all")
@@ -48,6 +48,7 @@ public class UserResource {
      }
  }
  
+ //In Postman, http://localhost:8080/ShareMates/api/info/
  @POST
  @Produces(MediaType.APPLICATION_JSON)
  @Consumes(MediaType.APPLICATION_JSON)
