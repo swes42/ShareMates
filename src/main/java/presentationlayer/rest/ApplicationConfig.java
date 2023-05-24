@@ -25,6 +25,7 @@ public class ApplicationConfig extends Application {
         resources.add(presentationlayer.errorhandling.MissingInputMapper.class);
         resources.add(presentationlayer.errorhandling.UserNotFoundMapper.class);
         resources.add(presentationlayer.rest.EquipmentsResource.class);
+        resources.add(presentationlayer.rest.UserResource.class);
     }
     
 }

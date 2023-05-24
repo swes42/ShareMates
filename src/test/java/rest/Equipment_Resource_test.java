@@ -38,7 +38,7 @@ public class Equipment_Resource_test {
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static Equipment e, e1;
-    private static User user;
+    private static User user, user1;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -82,13 +82,15 @@ public class Equipment_Resource_test {
             em.createNamedQuery("User.deleteAllRows").executeUpdate();
             
             user = new User("Test_User", "Password");
-            e = new Equipment("Lenovo Thinkpad", "256 GB sdd");
-            e1 = new Equipment("Apple Macbook", "256 GB sdd");
+            user1 = new User("Test_User1", "Password1");
             
-            e.setUser(user);
-            e1.setUser(user);
+            e = new Equipment("Lenovo Thinkpad", "256 GB sdd");
+            user.addEquipment(e);
+            e1 = new Equipment("Apple Macbook", "256 GB sdd");
+            user.addEquipment(e1);
             
             em.persist(user);
+            em.persist(user1);
             em.persist(e);
             em.persist(e1);
             em.getTransaction().commit();

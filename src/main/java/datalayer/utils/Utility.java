@@ -3,7 +3,7 @@ package datalayer.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import datalayer.dtos.EquipmentDTO;
+import datalayer.dtos.UserDTO;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.Set;
@@ -25,23 +25,23 @@ public class Utility {
             }
     }
     
-    public static EquipmentDTO json2DTO(String json) throws UnsupportedEncodingException{
-            return gson.fromJson(new String(json.getBytes("UTF8")), EquipmentDTO.class);
+    public static UserDTO json2DTO(String json) throws UnsupportedEncodingException{
+            return gson.fromJson(new String(json.getBytes("UTF8")), UserDTO.class);
     }
     
-    public static String DTO2json(EquipmentDTO epDTO){
-        return gson.toJson(epDTO, EquipmentDTO.class);
+    public static String DTO2json(UserDTO userDTO){
+        return gson.toJson(userDTO, UserDTO.class);
     }
     
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        printAllProperties();
         
         //Test json2DTO and back again
-        String str2 = "{'id':1, 'str1':'Dette er den første tekst', 'str2':'Her er den anden'}";
-        EquipmentDTO epDTO = json2DTO(str2);
-        System.out.println(epDTO);
+        String str2 = "{'str1':'Dette er den første tekst', 'str2':'Her er den anden'}";
+        UserDTO userDTO = json2DTO(str2);
+        System.out.println(userDTO);
         
-        String backAgain = DTO2json(epDTO);
+        String backAgain = DTO2json(userDTO);
         System.out.println(backAgain);
     }
 

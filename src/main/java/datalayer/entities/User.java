@@ -82,5 +82,9 @@ public class User implements Serializable {
         if (equipment != null) {
             equipments.add(equipment);
         }
-    }  
+    } 
+    
+    public void addEquipment(Equipment equipment){
+        equipments.add(equipment);
+    }
 }
