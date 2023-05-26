@@ -1,7 +1,5 @@
+package presentationlayer.rest;
 
-package rest;
-
-import presentationlayer.rest.ApplicationConfig;
 import datalayer.entities.Equipment;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -20,6 +18,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import datalayer.utils.EMF_Creator;
+import io.restassured.response.Response;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -27,7 +27,7 @@ import datalayer.utils.EMF_Creator;
  */
 
 
-public class Equipment_Resource_test {
+public class EquipmentResourceTest {
     
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
@@ -44,7 +44,6 @@ public class Equipment_Resource_test {
 
     @BeforeAll
     public static void setUpClass() {
-        //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
 
@@ -57,15 +56,11 @@ public class Equipment_Resource_test {
 
     @AfterAll
     public static void closeTestServer() {
-        //System.in.read();
-
-        //Don't forget this, if you called its counterpart in @BeforeAll
         EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
 
-    // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
+    //Sætter databasen op med 2 test equipments. 
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
@@ -73,7 +68,7 @@ public class Equipment_Resource_test {
             em.getTransaction().begin();
             em.createQuery("delete from Equipment").executeUpdate();
             
-            e = new Equipment("Lenovo Thinkpad", "256 gb ssd");
+            e = new Equipment("Macbook", "256 gb ssd");
             e1 = new Equipment("MacBook", "8 RAM");
             
             em.persist(e);
@@ -87,30 +82,37 @@ public class Equipment_Resource_test {
 
     @Test
     public void testServerIsUp() {
-        given().when().get("/equipmentserver").then().statusCode(200);
+        given().when().get("/equipment").then().statusCode(200);
+    }
+    
+    //JUnit test, bruger assertions til at sammenligne den forventede værdi med den faktiske værdi.
+    @Test
+    public void testAllEquipments() {
+        System.out.println("allEquipments");
+        EquipmentsResource instance = new EquipmentsResource();
+        String expResult = "[2]";
+        String result = instance.allEquipments();
+        assertEquals(expResult, result);
     }
 
     /*
-    //This test assumes the database contains two rows
+    JUnit-testmetode, der bruger biblioteket "Rest Assured" til at 
+    udføre en HTTP GET-anmodning til "/equipment/all" endpointet 
+    og derefter foretager assertions på den modtagne HTTP-respons.
+    */
     @Test
-    public void getAllEquipments() throws Exception {
-        given()
-                .contentType("application/json")
-                .when()
-                .get("/equipment/all").then()
-                .extract().body().jsonPath().getList("all Equipments", EquipmentDTO.class);
-    List<String> allEquips = new ArrayList();
-    for (EquipmentDTO e : )
-    }*/
-
-    @Test
-    public void testCount() throws Exception {
-        given()
-                .contentType("application/json")
-                .get("/equipment/count").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
-    }
+   public void testAPIgetAll() throws Exception {
+        Response response = given()
+        .contentType("application/json")
+        .get("/equipment/all");
+        
+        String responseBody = response.getBody().asString();
+        System.out.println("Response body: " + responseBody);
+    
+        response.then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("[0]", equalTo(2));
+}
     
 }
