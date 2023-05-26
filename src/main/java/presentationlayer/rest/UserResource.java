@@ -49,6 +49,7 @@ public class UserResource {
  }
  
  //In Postman, http://localhost:8080/ShareMates/api/info/
+ //rette path til add senere, ville give mere mening
  @POST
  @Produces(MediaType.APPLICATION_JSON)
  @Consumes(MediaType.APPLICATION_JSON)

@@ -3,7 +3,6 @@ package rest;
 
 import presentationlayer.rest.ApplicationConfig;
 import datalayer.entities.Equipment;
-import datalayer.entities.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
@@ -19,7 +18,6 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import datalayer.utils.EMF_Creator;
 
