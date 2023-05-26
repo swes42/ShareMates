@@ -29,10 +29,9 @@ import javax.validation.constraints.NotNull;
 public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
+    @Id
     @NotNull
     @Column(name = "name", length = 300)
     private String name;
@@ -68,7 +67,7 @@ public class Equipment implements Serializable {
         return name;
     }
 
-    public void setE_name(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

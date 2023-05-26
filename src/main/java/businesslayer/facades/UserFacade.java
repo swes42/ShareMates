@@ -16,8 +16,7 @@ public class UserFacade {
     private static UserFacade instance;
     private static EntityManagerFactory emf;
     
-    private UserFacade(){
-    }
+    private UserFacade(){}
     
 /**
  *

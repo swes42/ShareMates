@@ -26,6 +26,8 @@ import static org.junit.Assert.assertEquals;
  * @author Selina A.S.
  */
 
+//Startcode_test database
+
 
 public class EquipmentResourceTest {
     
@@ -69,7 +71,7 @@ public class EquipmentResourceTest {
             em.createQuery("delete from Equipment").executeUpdate();
             
             e = new Equipment("Macbook", "256 gb ssd");
-            e1 = new Equipment("MacBook", "8 RAM");
+            e1 = new Equipment("Lenovo", "8 RAM");
             
             em.persist(e);
             em.persist(e1);
@@ -95,13 +97,9 @@ public class EquipmentResourceTest {
         assertEquals(expResult, result);
     }
 
-    /*
-    JUnit-testmetode, der bruger biblioteket "Rest Assured" til at 
-    udføre en HTTP GET-anmodning til "/equipment/all" endpointet 
-    og derefter foretager assertions på den modtagne HTTP-respons.
-    */
+    
     @Test
-   public void testAPIgetAll() throws Exception {
+    public void testAPIgetAll() throws Exception {
         Response response = given()
         .contentType("application/json")
         .get("/equipment/all");

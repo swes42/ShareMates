@@ -27,6 +27,8 @@ import javax.persistence.TypedQuery;
  * @author Selina A.S.
  */
 
+//startcode database
+
 @Path("equipment")
 public class EquipmentsResource {
     
@@ -61,8 +63,8 @@ public class EquipmentsResource {
 
     @POST
     //@RolesAllowed({"user"}) //admin senere
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("add")
     public String addEquipment(String equipment) throws MissingInput {
         EquipmentDTO equipmentDTO = GSON.fromJson(equipment, EquipmentDTO.class);

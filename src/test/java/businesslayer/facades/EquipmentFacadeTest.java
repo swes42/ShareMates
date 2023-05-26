@@ -58,7 +58,7 @@ public class EquipmentFacadeTest extends TestCase {
 
     /**
      * Test of missingInput method, of class EquipmentFacade.
-     */
+    
     public void testMissingInput() {
         System.out.println("missingInput");
         String name = "";
@@ -69,9 +69,6 @@ public class EquipmentFacadeTest extends TestCase {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getAllEquipments method, of class EquipmentFacade.
-     */
     public void testGetAllEquipments() {
         System.out.println("getAllEquipments");
         EquipmentFacade instance = null;
@@ -80,6 +77,6 @@ public class EquipmentFacadeTest extends TestCase {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    } */
     
 }

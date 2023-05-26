@@ -2,10 +2,6 @@ package businesslayer.facades;
 
 import datalayer.dtos.EquipmentDTO;
 import datalayer.entities.Equipment;
-import datalayer.entities.User;
-import presentationlayer.errorhandling.UserNotFound;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.NotFoundException;
@@ -21,6 +17,16 @@ public class EquipmentFacade {
     
     private EquipmentFacade() {}
     
+/**
+ *
+ * @param _emf
+ * @return the instance of this facade.
+ */
+    
+    private EntityManager getEntityManager(){
+        return emf.createEntityManager();
+    }  
+    
     public static EquipmentFacade getEquipmentFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -28,10 +34,7 @@ public class EquipmentFacade {
         }
         return instance;
     }
-    
-    private EntityManager getEntityManager(){
-        return emf.createEntityManager();
-    }
+
     
     public EquipmentDTO addEquipment(String name, String description) throws NotFoundException {
         EntityManager em = getEntityManager();
@@ -58,16 +61,4 @@ public class EquipmentFacade {
         
         return new EquipmentDTO(equipment);    
     }
-
-    public void missingInput(String name, String description) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
-    public EquipmentDTO getAllEquipments() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
-    
 }
