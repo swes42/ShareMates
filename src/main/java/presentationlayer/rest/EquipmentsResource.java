@@ -41,7 +41,7 @@ public class EquipmentsResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
-        return "{\"msg\":\"Equipments Resource\"}";
+        return "{\"msg\":\"equipment endpoint\"}";
     }
     
     //http://localhost:8080/ShareMates/api/equipment/all

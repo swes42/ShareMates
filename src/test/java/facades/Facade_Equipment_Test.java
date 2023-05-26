@@ -6,12 +6,8 @@ import datalayer.utils.EMF_Creator;
 import datalayer.entities.Equipment;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-
-//Uncomment the line below, to temporarily disable this test
 
 
 public class Facade_Equipment_Test {

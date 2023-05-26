@@ -24,16 +24,23 @@ import javax.ws.rs.core.MediaType;
  */
 
 //http://localhost:8080/ShareMates/api/info/
-@Path("info")
+@Path("user")
 public class UserResource {
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final UserFacade FACADE =  UserFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
    
+    
+@GET
+@Produces({MediaType.APPLICATION_JSON})
+public String demo() {
+    return "{\"msg\":\"user endpoint\"}";
+}
+    
 
     
- //http://localhost:8080/ShareMates/api/info/all   
+ //http://localhost:8080/ShareMates/api/user/all   
  @GET
  @Produces(MediaType.APPLICATION_JSON)
  @Path("all")
@@ -48,11 +55,12 @@ public class UserResource {
      }
  }
  
- //In Postman, http://localhost:8080/ShareMates/api/info/
+ //In Postman, http://localhost:8080/ShareMates/api/user/add
  //rette path til add senere, ville give mere mening
  @POST
  @Produces(MediaType.APPLICATION_JSON)
  @Consumes(MediaType.APPLICATION_JSON)
+ @Path("add")
  public String addUser(String user) throws Exception {
      UserDTO userDTO = GSON.fromJson(user, UserDTO.class);
      UserDTO addUser = FACADE.addUser(userDTO.getUsername(), userDTO.getPassword());
