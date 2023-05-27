@@ -1,4 +1,4 @@
-package datalayer.entities;
+package businesslayer.entities;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;

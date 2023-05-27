@@ -1,6 +1,6 @@
 package presentationlayer.rest;
 
-import datalayer.entities.Equipment;
+import businesslayer.entities.Equipment;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;

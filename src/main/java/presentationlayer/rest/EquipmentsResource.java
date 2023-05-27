@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import datalayer.dtos.EquipmentDTO;
 import presentationlayer.errorhandling.MissingInput;
 import businesslayer.facades.EquipmentFacade;
-import datalayer.entities.Equipment;
+import businesslayer.entities.Equipment;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -53,7 +53,7 @@ public class EquipmentsResource {
     public String allEquipments() {
         EntityManager em = EMF.createEntityManager();
         try {
-            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", datalayer.entities.Equipment.class);
+            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", businesslayer.entities.Equipment.class);
             List<Equipment> equipments = query.getResultList();
             return "[" + equipments.size() + "]";
         } finally {

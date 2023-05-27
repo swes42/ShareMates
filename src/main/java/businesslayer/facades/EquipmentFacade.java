@@ -1,7 +1,7 @@
 package businesslayer.facades;
 
 import datalayer.dtos.EquipmentDTO;
-import datalayer.entities.Equipment;
+import businesslayer.entities.Equipment;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.NotFoundException;

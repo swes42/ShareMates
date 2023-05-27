@@ -1,7 +1,7 @@
 
 package datalayer.dtos;
 
-import datalayer.entities.User;
+import businesslayer.entities.User;
 
 /**
  *

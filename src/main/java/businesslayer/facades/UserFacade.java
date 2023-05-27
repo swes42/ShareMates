@@ -2,7 +2,7 @@
 package businesslayer.facades;
 
 import datalayer.dtos.UserDTO;
-import datalayer.entities.User;
+import businesslayer.entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.NotFoundException;

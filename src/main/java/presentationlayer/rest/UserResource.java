@@ -5,7 +5,7 @@ import businesslayer.facades.UserFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datalayer.dtos.UserDTO;
-import datalayer.entities.User;
+import businesslayer.entities.User;
 import datalayer.utils.EMF_Creator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -47,7 +47,7 @@ public String demo() {
  public String getAllUsers(){
      EntityManager em = EMF.createEntityManager();
      try {
-         TypedQuery<User> query = em.createQuery ("SELECT u FROM User u", datalayer.entities.User.class);
+         TypedQuery<User> query = em.createQuery ("SELECT u FROM User u", businesslayer.entities.User.class);
          List<User> users = query.getResultList();
          return "[" + users.size() + "]";
      } finally {
