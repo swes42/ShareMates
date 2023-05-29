@@ -40,7 +40,7 @@ public class Equipment implements Serializable {
     @Column (name = "description", length = 250)
     private String description;
     
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_name")
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
     

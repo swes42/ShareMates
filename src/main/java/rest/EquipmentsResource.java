@@ -7,7 +7,6 @@ import dtos.EquipmentDTO;
 import errorhandling.MissingInput;
 import facades.EquipmentFacade;
 import entities.Equipment;
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
