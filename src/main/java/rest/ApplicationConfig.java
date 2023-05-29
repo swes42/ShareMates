@@ -1,4 +1,4 @@
-package presentationlayer.rest;
+package rest;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -20,12 +20,12 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(errorhandling.GenericExceptionMapper.class);
+        resources.add(errorhandling.MissingInputMapper.class);
+        resources.add(errorhandling.UserNotFoundMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
-        resources.add(presentationlayer.errorhandling.GenericExceptionMapper.class);
-        resources.add(presentationlayer.errorhandling.MissingInputMapper.class);
-        resources.add(presentationlayer.errorhandling.UserNotFoundMapper.class);
-        resources.add(presentationlayer.rest.EquipmentsResource.class);
-        resources.add(presentationlayer.rest.UserResource.class);
+        resources.add(rest.EquipmentsResource.class);
+        resources.add(rest.UserResource.class);
     }
     
 }

@@ -1,36 +1,41 @@
+package rest;
 
-package businesslayer.facades;
-
-import datalayer.dtos.EquipmentDTO;
-import businesslayer.entities.Equipment;
-import datalayer.utils.EMF_Creator;
+import rest.ApplicationConfig;
+import rest.EquipmentsResource;
+import entities.Equipment;
 import io.restassured.RestAssured;
+import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
 import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import presentationlayer.rest.ApplicationConfig;
+import org.junit.jupiter.api.Test;
+import utils.EMF_Creator;
+import io.restassured.response.Response;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
  * @author Selina A.S.
  */
-public class EquipmentFacadeTest {
+
+//Startcode_test database
+
+
+public class EquipmentResourceTest {
     
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static Equipment e, e1;
-    private static EquipmentFacade equipmentFacade;
-
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -67,8 +72,8 @@ public class EquipmentFacadeTest {
             em.getTransaction().begin();
             em.createQuery("delete from Equipment").executeUpdate();
             
-            e = new Equipment("FacadeTest1", "256 gb ssd");
-            e1 = new Equipment("FacadeTest2", "8 RAM");
+            e = new Equipment("Macbook", "256 gb ssd");
+            e1 = new Equipment("Lenovo", "8 RAM");
             
             em.persist(e);
             em.persist(e1);
@@ -78,51 +83,36 @@ public class EquipmentFacadeTest {
             em.close();
         }
     }
-    
+
     @Test
-    public void testAddEquipment() {
-        // Test af addEquipment-metoden i facade-klassen
-        
-        // Opsætning af testdata og inputværdier
-        String name = "HP";
-        String description = "core i7";
-        
-        // Udførelse af metoden
-        EquipmentDTO result = equipmentFacade.addEquipment(name, description);
-        
-        // Forventet resultat
-        EquipmentDTO expectedResult = new EquipmentDTO(name, description);
-        
-        // Sammenligning af resultatet med det forventede resultat
-        assertEquals(expectedResult.getName(), result.getName());
-        assertEquals(expectedResult.getDescription(), result.getDescription());
+    public void testServerIsUp() {
+        given().when().get("/equipment").then().statusCode(200);
     }
-      /**
-     * Test of addEquipment method, of class EquipmentFacade.
-     
-     * 
-     * @Test
-    public void testGetEquipmentFacade() {
-        String name = "[]";
-        String description = "[]";
-        EquipmentFacade instance = EquipmentFacade.getEquipmentFacade(emf);
-        EquipmentDTO expResult = new EquipmentDTO(name, description);
-        EquipmentDTO result = instance.addEquipment(name, description);
+    
+    //JUnit test, bruger assertions til at sammenligne den forventede værdi med den faktiske værdi.
+    @Test
+    public void testAllEquipments() {
+        System.out.println("allEquipments");
+        EquipmentsResource instance = new EquipmentsResource();
+        String expResult = "[2]";
+        String result = instance.allEquipments();
         assertEquals(expResult, result);
     }
 
-  
+    
     @Test
-    public void testAddEquipment() {
-        System.out.println("addEquipment");       
-        String name = "";
-        String description = "";
-        EquipmentFacade instance = EquipmentFacade.getEquipmentFacade(emf);
-        EquipmentDTO expResult = null;
-        EquipmentDTO result = instance.addEquipment(name, description);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
+    public void testAPIgetAll() throws Exception {
+        Response response = given()
+        .contentType("application/json")
+        .get("/equipment/all");
+        
+        String responseBody = response.getBody().asString();
+        System.out.println("Response body: " + responseBody);
+    
+        response.then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("[0]", equalTo(2));
+}
     
 }

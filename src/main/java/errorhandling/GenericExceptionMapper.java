@@ -1,4 +1,4 @@
-package presentationlayer.errorhandling;
+package errorhandling;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

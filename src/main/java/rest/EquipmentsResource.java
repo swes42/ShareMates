@@ -1,12 +1,12 @@
-
-package presentationlayer.rest;
+    
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import datalayer.dtos.EquipmentDTO;
-import presentationlayer.errorhandling.MissingInput;
-import businesslayer.facades.EquipmentFacade;
-import businesslayer.entities.Equipment;
+import dtos.EquipmentDTO;
+import errorhandling.MissingInput;
+import facades.EquipmentFacade;
+import entities.Equipment;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import datalayer.utils.EMF_Creator;
+import utils.EMF_Creator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -53,7 +53,7 @@ public class EquipmentsResource {
     public String allEquipments() {
         EntityManager em = EMF.createEntityManager();
         try {
-            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", businesslayer.entities.Equipment.class);
+            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", entities.Equipment.class);
             List<Equipment> equipments = query.getResultList();
             return "[" + equipments.size() + "]";
         } finally {

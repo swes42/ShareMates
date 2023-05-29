@@ -1,13 +1,13 @@
-package businesslayer.facades;
+package facades;
 
-import datalayer.dtos.EquipmentDTO;
-import businesslayer.entities.Equipment;
+import dtos.EquipmentDTO;
+import entities.Equipment;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.NotFoundException;
 
 /**
- *
+ *  
  * @author Selina A.S.
  */
 public class EquipmentFacade {

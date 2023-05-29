@@ -1,6 +1,6 @@
-package datalayer.dtos;
+package dtos;
 
-import businesslayer.entities.Equipment;
+import entities.Equipment;
 
 /**
  *

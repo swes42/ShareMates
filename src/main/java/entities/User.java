@@ -1,5 +1,5 @@
 
-package businesslayer.entities;
+package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,6 +50,8 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Equipment> equipments = new ArrayList();
     
+    //der skal altiv være en no-argument constructor i entity-klasserne.
+    //nødvendig for at den kan lave transformationerne mellem persistence layer og data layer. 
     public User(){
     }
     
