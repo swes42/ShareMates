@@ -69,12 +69,15 @@ public class LoginEndpoint {
     }
     
     
-    public String createToken(String username, List<String> roles) throws JOSEException {
+    public String createToken(String userName, List<String> roles) throws JOSEException {
 
         StringBuilder res = new StringBuilder();
+        
+        if(roles != null ) {
         for (String string : roles) {
             res.append(string);
             res.append(",");
+        }
         }
         String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
         String issuer = "sharemates";
@@ -82,8 +85,8 @@ public class LoginEndpoint {
         JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
         Date date = new Date();
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
-                .claim("username", username)
+                .subject(userName)
+                .claim("username", userName)
                 .claim("roles", rolesAsString)
                 .claim("issuer", issuer)
                 .issueTime(date)

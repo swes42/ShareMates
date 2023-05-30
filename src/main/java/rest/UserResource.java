@@ -28,7 +28,7 @@ import javax.ws.rs.core.UriInfo;
  * @author Selina A.S.
  */
 
-//http://localhost:8080/ShareMates/api/info/
+//http://localhost:8080/ShareMates/api/user
 @Path("user")
 public class UserResource {
     
