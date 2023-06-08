@@ -8,33 +8,33 @@ import entities.Equipment;
  */
 public class EquipmentDTO {
     
-    private String name;
-    private String description;
+    private String e_name;
+    private String e_description;
     
     public EquipmentDTO (Equipment equipment){
-        this.name = equipment.getName();
-        this.description = equipment.getDescription();
+        this.e_name = equipment.getEquipmentName();
+        this.e_description = equipment.getEquipmentName();
     }
     
-    public EquipmentDTO(String name, String description){
-        this.name = name;
-        this.description = description;
+    public EquipmentDTO(String e_name, String e_description){
+        this.e_name = e_name;
+        this.e_description = e_description;
     }
 
-    public String getName() {
-        return name;
+    public String getEquipmentName() {
+        return e_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEquipmentName(String e_name) {
+        this.e_name = e_name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEquipmentDescription() {
+        return e_description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEquipmentDescription(String e_description) {
+        this.e_description = e_description;
     }
     
     

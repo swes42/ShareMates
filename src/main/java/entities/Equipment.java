@@ -29,29 +29,27 @@ import javax.validation.constraints.NotNull;
 public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private int id;
     
     @Id
-    @NotNull
-    @Column(name = "name", length = 300)
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     
     @NotNull
-    @Column (name = "description", length = 250)
-    private String description;
+    @Column(name = "equipment_name", length = 300)
+    private String equipment_name;
     
-    @JoinColumn(name = "user_name")
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private User user;
+    @NotNull
+    @Column (name = "equipment_description", length = 250)
+    private String equipment_description;
     
-    
+   
     public Equipment() {
     }  
     
 
-    public Equipment(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public Equipment(String equipment_name, String equipment_description) {
+        this.equipment_name = equipment_name;
+        this.equipment_description = equipment_description;
     }
     
 
@@ -63,33 +61,22 @@ public class Equipment implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEquipmentName() {
+        return equipment_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEquipmentName(String equipment_name) {
+        this.equipment_name = equipment_name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEquipmentDescription() {
+        return equipment_description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEquipmentDescription(String equipment_description) {
+        this.equipment_description = equipment_description;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        if (user != null) {
-            this.user = user;
-            user.setEquipments(this);
-        } else {
-            this.user = null;
-        }
-    }
+   
 }
 

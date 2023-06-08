@@ -46,7 +46,7 @@ public class EquipmentsResource {
     }
     
     //http://localhost:8080/ShareMates/api/equipment/all
-    @Path("all")
+    @Path("allEquipments")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allEquipments() {
@@ -64,10 +64,10 @@ public class EquipmentsResource {
     //@RolesAllowed({"user"}) //admin senere
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("add")
+    @Path("addEquipment")
     public String addEquipment(String equipment) throws MissingInput {
         EquipmentDTO equipmentDTO = GSON.fromJson(equipment, EquipmentDTO.class);
-        EquipmentDTO addEquipment = FACADE.addEquipment(equipmentDTO.getName(), equipmentDTO.getDescription());
+        EquipmentDTO addEquipment = FACADE.addEquipment(equipmentDTO.getEquipmentName(), equipmentDTO.getEquipmentDescription());
         return GSON.toJson(addEquipment);
     } 
     

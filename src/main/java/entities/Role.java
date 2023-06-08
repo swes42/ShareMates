@@ -46,7 +46,7 @@ public class Role implements Serializable {
         return listOfUsers;
     }
 
-    public void setUserList(List<User> listOfUsers) {
+    public void setListOfUsers(List<User> listOfUsers) {
         this.listOfUsers = listOfUsers;
     }   
 }

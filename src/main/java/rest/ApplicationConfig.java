@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
         resources.add(errorhandling.UserNotFoundMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.EquipmentsResource.class);
+        resources.add(rest.LendResource.class);
         resources.add(rest.ShareMatesResource.class);
         resources.add(rest.UserResource.class);
         resources.add(security.JWTAuthenticationFilter.class);

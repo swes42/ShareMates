@@ -72,8 +72,8 @@ public class EquipmentResourceTest {
             em.getTransaction().begin();
             em.createQuery("delete from Equipment").executeUpdate();
             
-            e = new Equipment("Macbook", "256 gb ssd");
-            e1 = new Equipment("Lenovo", "8 RAM");
+            e = new Equipment("LENOVO", "D24 FULL-45 23,8\" HD SKÆRM");
+            e1 = new Equipment("ACER", "TN Full HD (1920 x 1080)");
             
             em.persist(e);
             em.persist(e1);
@@ -104,7 +104,7 @@ public class EquipmentResourceTest {
     public void testAPIgetAll() throws Exception {
         Response response = given()
         .contentType("application/json")
-        .get("/equipment/all");
+        .get("/equipment/allEquipments");
         
         String responseBody = response.getBody().asString();
         System.out.println("Response body: " + responseBody);

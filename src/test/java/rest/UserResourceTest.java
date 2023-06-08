@@ -21,18 +21,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 import io.restassured.response.Response;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
 /**
  *
  * @author Selina A.S.
  */
-
 //Startcode_test database
-
-
 public class UserResourceTest {
-    
+
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private static User u, u1;
@@ -71,13 +70,14 @@ public class UserResourceTest {
         try {
             em.getTransaction().begin();
             em.createQuery("delete from User").executeUpdate();
-            
+            em.createQuery("delete from Role").executeUpdate();
+
             u = new User("TestBruger1", "TestPassword");
             u1 = new User("TestBruger2", "TestPassword");
-            
+
             em.persist(u);
             em.persist(u1);
-            
+
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -88,31 +88,20 @@ public class UserResourceTest {
     public void testServerIsUp() {
         given().when().get("/user").then().statusCode(200);
     }
-    
-    //JUnit test, bruger assertions til at sammenligne den forventede værdi med den faktiske værdi.
-    @Test
-    public void testAllUsers() {
-        System.out.println("allUsers");
-        UserResource instance = new UserResource();
-        String expResult = "[2]";
-        String result = instance.getAllUsers();
-        assertEquals(expResult, result);
-    }
 
-    
     @Test
-    public void testAPIgetAll() throws Exception {
+    public void testAPIgetAllUsers() throws Exception {
         Response response = given()
-        .contentType("application/json")
-        .get("/user/all");
-        
+                .contentType("application/json")
+                .get("/user/all");
+
         String responseBody = response.getBody().asString();
         System.out.println("Response body: " + responseBody);
-    
+
         response.then()
-        .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("[0]", equalTo(2));
-}
-    
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("[0]", equalTo(2));
+    }
+
 }
