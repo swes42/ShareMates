@@ -58,25 +58,23 @@ public class LendFacade {
         return lendDTOS;
     }
 
-    public LendDTO createLend(String username, String equipmentName) throws NotFoundException {
+    public LendDTO createLend(String username, String equipment_name) throws NotFoundException {
         EntityManager em = getEntityManager();
         Equipment e;
         User u;
 
         try {
             em.getTransaction().begin();
-
             TypedQuery<User> userquery = em.createQuery("SELECT u FROM User u WHERE u.userName = :username", User.class)
                     .setParameter("username", username);
             List<User> users = userquery.getResultList();
-
             if (users.isEmpty()) {
                 throw new NotFoundException("User not found");
             }
             u = users.get(0);
 
-            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentName = :equipment_name", Equipment.class)
-                    .setParameter("equipment_name", equipmentName);
+            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e WHERE e.equipment_name = :equipment_name", Equipment.class)
+                    .setParameter("equipment_name", equipment_name);
             List<Equipment> equipments = query.getResultList();
 
             if (equipments.isEmpty()) {

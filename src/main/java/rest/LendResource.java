@@ -87,7 +87,7 @@ public class LendResource {
         }
         
         LendDTO lendDTO = GSON.fromJson(lend, LendDTO.class);
-        LendDTO createLend = FACADE.createLend(lendDTO.getEquipment(), user.getName());
+        LendDTO createLend = FACADE.createLend(user.getName(), lendDTO.getEquipment());
         return GSON.toJson(createLend);
     } 
     
