@@ -1,10 +1,14 @@
 package rest;
 
+import entities.Equipment;
+import entities.Lend;
 import entities.Role;
 import entities.User;
+import facades.LendFacade;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,24 +18,26 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import utils.EMF_Creator;
-import io.restassured.response.Response;
 
 /**
  *
  * @author Selina A.S.
  */
-//Startcode_test database
-public class UserResourceTest {
+public class LendResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static User u, u1;
-    private static Role r, r1;
+    private static User u;
+    private static Role r;
+    private static Lend l;
+    private static Equipment e;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -40,6 +46,12 @@ public class UserResourceTest {
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
+    }
+
+    @AfterAll
+    public static void closeTestServer() {
+        EMF_Creator.endREST_TestWithDB();
+        httpServer.shutdownNow();
     }
 
     @BeforeAll
@@ -54,51 +66,44 @@ public class UserResourceTest {
         RestAssured.defaultParser = Parser.JSON;
     }
 
-    @AfterAll
-    public static void closeTestServer() {
-        EMF_Creator.endREST_TestWithDB();
-        httpServer.shutdownNow();
-    }
-
-    
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            em.createQuery("delete from Lend").executeUpdate();
             em.createQuery("delete from User").executeUpdate();
             em.createQuery("delete from Role").executeUpdate();
+            em.createQuery("delete from Equipment").executeUpdate();
+            
             
             r = new Role("user");
-            r1 = new Role("admin");
-            u = new User("TestBruger1", "TestPassword");
-            u1 = new User("TestBruger2", "TestPassword");
-            
+            u = new User("Alison", "Password");
+            e = new Equipment("Macbook", "16 gb ram");
             u.addRole(r);
-            u.addRole(r1);
+            l = new Lend(u, e);
             
-
             em.persist(r);
-            em.persist(r1);
             em.persist(u);
-            em.persist(u1);
-
+            em.persist(e);
+            em.persist(l);
+                  
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-    @Test
+     @Test
     public void testServerIsUp() {
-        given().when().get("/user").then().statusCode(200);
+        given().when().get("/lend").then().statusCode(200);
     }
-
+    
     @Test
-    public void getAllUsers() throws Exception {
+    public void testGetAllLends() {
         Response response = given()
                 .contentType("application/json")
-                .get("/user/all");
+                .get("/lend/allLends");
 
         String responseBody = response.getBody().asString();
         System.out.println("Response body: " + responseBody);
@@ -106,7 +111,8 @@ public class UserResourceTest {
         response.then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("[0]", equalTo(2));
+                .body("[0]", equalTo(1));
+
     }
 
 }

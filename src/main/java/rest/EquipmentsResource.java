@@ -50,15 +50,9 @@ public class EquipmentsResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String allEquipments() {
-        EntityManager em = EMF.createEntityManager();
-        try {
-            TypedQuery<Equipment> query = em.createQuery("SELECT e FROM Equipment e", entities.Equipment.class);
-            List<Equipment> equipments = query.getResultList();
-            return "[" + equipments.size() + "]";
-        } finally {
-            em.close();
+        List<EquipmentDTO> listDTO = FACADE.getAllEquipments();
+        return GSON.toJson(listDTO);
         }
-    }
 
     @POST
     //@RolesAllowed({"user"}) //admin senere
