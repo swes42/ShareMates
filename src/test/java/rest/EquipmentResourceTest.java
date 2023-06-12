@@ -1,7 +1,6 @@
 package rest;
 
-import rest.ApplicationConfig;
-import rest.EquipmentsResource;
+import dtos.EquipmentDTO;
 import entities.Equipment;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -11,24 +10,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
-import io.restassured.response.Response;
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 /**
  *
  * @author Selina A.S.
  */
 
-//Startcode_test database
+ 
 
 
 public class EquipmentResourceTest {
@@ -90,17 +89,25 @@ public class EquipmentResourceTest {
     }
     
     @Test
-    public void getAllUsers() throws Exception {
-        Response response = given()
+    public void getAllEquipments() throws Exception {
+        System.out.println("Testing getAllEquipments:");
+        
+        List<EquipmentDTO> equDTO;
+        equDTO = given()
                 .contentType("application/json")
-                .get("/equipment/allEquipments");
-
-        String responseBody = response.getBody().asString();
-        System.out.println("Response body: " + responseBody);
-
-        response.then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("[0]", equalTo(2));
+                .when()
+                .get("/equipment/allEquipments")
+                .then()
+                .extract().body().jsonPath().getList("allEquipments", EquipmentDTO.class);
+        
+        List<String> resultList = new ArrayList();
+        for(EquipmentDTO e : equDTO) {
+            resultList.add(e.getEquipmentName());
+        }
+        
+        EquipmentDTO eDTO = new EquipmentDTO(e);
+        EquipmentDTO e1DTO = new EquipmentDTO(e1);
+        
+        assertThat(resultList, containsInAnyOrder(eDTO.getEquipmentName(), e1DTO.getEquipmentName()));
     }
 }

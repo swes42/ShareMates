@@ -1,5 +1,6 @@
 package rest;
 
+import dtos.UserDTO;
 import entities.Role;
 import entities.User;
 import io.restassured.RestAssured;
@@ -10,16 +11,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
-import io.restassured.response.Response;
+import java.util.ArrayList;
+import java.util.List;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 /**
  *
@@ -96,17 +98,25 @@ public class UserResourceTest {
 
     @Test
     public void getAllUsers() throws Exception {
-        Response response = given()
+        System.out.println("Testing getAllUser:");
+        
+        List<UserDTO> usersDTO; 
+        usersDTO = given()
                 .contentType("application/json")
-                .get("/user/all");
-
-        String responseBody = response.getBody().asString();
-        System.out.println("Response body: " + responseBody);
-
-        response.then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("[0]", equalTo(2));
+                .when()
+                .get("/user/all")
+                .then()
+                .extract().body().jsonPath().getList("allUsers", UserDTO.class);
+        
+        List<String> resultList = new ArrayList();
+        for (UserDTO u : usersDTO){
+            resultList.add(u.getUsername());
+        }
+        
+        UserDTO uDTO = new UserDTO(u);
+        UserDTO u1DTO = new UserDTO(u1);
+        
+        assertThat(resultList, containsInAnyOrder(uDTO.getUsername(), u1DTO.getUsername()));
     }
 
 }
