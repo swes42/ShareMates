@@ -4,7 +4,6 @@ import entities.Equipment;
 import entities.Lend;
 import entities.Role;
 import entities.User;
-import facades.LendFacade;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
@@ -18,7 +17,6 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
-import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +28,8 @@ import utils.EMF_Creator;
  *
  * @author Selina A.S.
  */
+
+
 public class LendResourceTest {
 
     private static final int SERVER_PORT = 7777;

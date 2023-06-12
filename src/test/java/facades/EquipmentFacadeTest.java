@@ -16,7 +16,8 @@ import utils.EMF_Creator;
  *
  * @author Selina A.S.
  */
-@Disabled
+
+
 //Startcode_test
 
 public class EquipmentFacadeTest {
