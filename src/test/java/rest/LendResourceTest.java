@@ -100,6 +100,13 @@ public class LendResourceTest {
     }
     
     @Test
+    public void testCreateLend(){
+        
+    }
+    
+    
+    
+    @Test
     public void testGetAllLends() {
         Response response = given()
                 .contentType("application/json")
@@ -114,5 +121,7 @@ public class LendResourceTest {
                 .body("[0]", equalTo(1));
 
     }
+    
+    
 
 }

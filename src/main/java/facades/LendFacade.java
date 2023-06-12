@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package facades;
 
 import dtos.LendDTO;
@@ -23,8 +20,9 @@ public class LendFacade {
 
     private static LendFacade instance;
     private static EntityManagerFactory emf;
+    private EntityManager entityManager;
 
-    private LendFacade() {
+    LendFacade() {
 
     }
 
@@ -38,6 +36,12 @@ public class LendFacade {
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+    
+    //Bruges til facade testen...
+    public LendFacade(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public List<LendDTO> getAllLends() {

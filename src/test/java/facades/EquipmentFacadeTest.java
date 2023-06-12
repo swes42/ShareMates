@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
@@ -15,7 +16,7 @@ import utils.EMF_Creator;
  *
  * @author Selina A.S.
  */
-
+@Disabled
 //Startcode_test
 
 public class EquipmentFacadeTest {

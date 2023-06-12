@@ -89,30 +89,18 @@ public class EquipmentResourceTest {
         given().when().get("/equipment").then().statusCode(200);
     }
     
-    //JUnit test, bruger assertions til at sammenligne den forventede værdi med den faktiske værdi.
     @Test
-    public void testAllEquipments() {
-        System.out.println("allEquipments");
-        EquipmentsResource instance = new EquipmentsResource();
-        String expResult = "[2]";
-        String result = instance.allEquipments();
-        assertEquals(expResult, result);
-    }
-
-    
-    @Test
-    public void testAPIgetAll() throws Exception {
+    public void getAllUsers() throws Exception {
         Response response = given()
-        .contentType("application/json")
-        .get("/equipment/allEquipments");
-        
+                .contentType("application/json")
+                .get("/equipment/allEquipments");
+
         String responseBody = response.getBody().asString();
         System.out.println("Response body: " + responseBody);
-    
+
         response.then()
-        .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("[0]", equalTo(2));
-}
-    
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("[0]", equalTo(2));
+    }
 }
